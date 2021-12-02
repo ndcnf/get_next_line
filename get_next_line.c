@@ -14,10 +14,12 @@
 
 char	*get_next_line(int fd)
 {
-	static int	i; 			// Position actuelle dans la ligne a retourner
-	static char	*buffer;	// celui qui voyage entre les mondes, le gardien de la position interfonctions.
+	int			i; 					// Position actuelle dans la ligne a retourner
+	static char	buffer[BUFFER_SIZE + 1];	// celui qui voyage entre les mondes, le gardien de la position interfonctions.
 	char		*line;		// la ligne a retourner. Gardons la propre. La star de la fonction.
-	//ssize_t		*been_read;	// la taille de ce qui a ete lu
+	ssize_t		been_read;	// la taille de ce qui a ete lu
+	int			welcome; // premiere entree dans la fonction
+	int			j;
 
 	/*	est-ce que l'initialisation ne se fera qu'une seule fois,
 		reellement ou est-ce que ca fonctionne uniquement lors de
@@ -28,28 +30,71 @@ char	*get_next_line(int fd)
 		pas de reste d'un appel precedent
 
 		Ici, on part sur le fait qu'il est vide (n'a que des zeros)*/
-	while (*buffer == 0)
+	i = 1;
+	j = 0;
+	welcome = 1;
+	line = NULL;
+	while (i > 0)
 	{
-		line = NULL;
-		buffer = (char*)ft_calloc((sizeof(char) * BUFFER_SIZE) + 1, BUFFER_SIZE);
-		if (!buffer)
+		if (welcome == 1)
+		{
+			i = 0;
+			welcome = 0;
+		}
+
+		j = 0;	
+		if (buffer[j] == 0)
+		{
+			line = (char*)ft_calloc(line_len(buffer), sizeof(char));
+			if (!line)
+				return (NULL);
+			been_read = read(fd, buffer, BUFFER_SIZE);
+		}
+// ICI une question. La string de read() doit etre testee ici.
+		while (buffer[j])
+		{
+			if (buffer[j] == '\n')
+			{
+				line[i] = buffer[j];
+				//i = 0; utile si static
+				return (line);
+			}
+			else
+			{
+				line[i] = buffer[j];
+				i++;
+				j++;
+			}
+		}
+
+	}
+	return (0); // pas sure de celui-ci.
+}
+
+/*
+
+	while (buffer[i] == 0)
+	{
+		//line = NULL;
+		line = (char*)ft_calloc(line_len(buffer), sizeof(char));
+		if (!line)
 			return (NULL);
-		read(fd, buffer, BUFFER_SIZE);
+		been_read = read(fd, buffer, BUFFER_SIZE);
 	}
 
-	while (*buffer)
+	while (buffer[i])
 	{
-		if (*buffer == '\n')
+		if (buffer[i] == '\n')
 		{
-			line[i] = *buffer;
+			line[i] = buffer[i];
 			i = 0;
 			return (line);
 		}
 		else
 		{
-			line[i] = *buffer;
+			line[i] = buffer[i];
 			i++;
-			*buffer++;
+			buffer[i]++;
 		}
 	}
 
@@ -60,7 +105,6 @@ char	*get_next_line(int fd)
 
 
 }
-/*
 
 	while (been_read > 0)
 	{

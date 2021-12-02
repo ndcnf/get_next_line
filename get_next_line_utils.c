@@ -28,3 +28,17 @@ void	*ft_calloc(size_t count, size_t size)
 	}
 	return (res);
 }
+
+int	line_len(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == '\n')
+			return (i);
+		i++;
+	}
+	return (0);
+}
