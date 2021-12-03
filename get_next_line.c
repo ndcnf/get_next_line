@@ -6,7 +6,7 @@
 /*   By: nchennaf <nchennaf@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 13:06:35 by nchennaf          #+#    #+#             */
-/*   Updated: 2021/12/01 15:26:36 by nchennaf         ###   ########.fr       */
+/*   Updated: 2021/12/03 14:00:12 by nchennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,71 +38,50 @@ char	*get_next_line(int fd)
 	{
 		if (welcome == 1)
 		{
+//			printf("you're welcome\n");
 			i = 0;
 			welcome = 0;
 		}
 
-		j = 0;	
 		if (buffer[j] == 0)
 		{
+//			printf("avant calloc\n");
 			line = (char*)ft_calloc(line_len(buffer), sizeof(char));
+//			printf("apres calloc\n");
 			if (!line)
 				return (NULL);
 			been_read = read(fd, buffer, BUFFER_SIZE);
+//			printf("apres read\n");
+			j = 0;
 		}
 // ICI une question. La string de read() doit etre testee ici.
-		while (buffer[j])
+		while (j < (BUFFER_SIZE))
 		{
+//			printf("avant test buffer[j]\n");
 			if (buffer[j] == '\n')
 			{
+//				printf("[%c]", buffer[j]);
 				line[i] = buffer[j];
 				//i = 0; utile si static
 				return (line);
 			}
 			else
 			{
+//			printf("%c", buffer[j]);
 				line[i] = buffer[j];
 				i++;
 				j++;
 			}
 		}
-
 	}
 	return (0); // pas sure de celui-ci.
 }
 
+
+
+
+
 /*
-
-	while (buffer[i] == 0)
-	{
-		//line = NULL;
-		line = (char*)ft_calloc(line_len(buffer), sizeof(char));
-		if (!line)
-			return (NULL);
-		been_read = read(fd, buffer, BUFFER_SIZE);
-	}
-
-	while (buffer[i])
-	{
-		if (buffer[i] == '\n')
-		{
-			line[i] = buffer[i];
-			i = 0;
-			return (line);
-		}
-		else
-		{
-			line[i] = buffer[i];
-			i++;
-			buffer[i]++;
-		}
-	}
-
-
-
-
-
-
 
 }
 

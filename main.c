@@ -3,14 +3,18 @@
 
 int main()
 {
-    int fd;
+	int fd;
+	int	i;
 
-    fd = open("myfile.txt", O_RDONLY);
-    printf("[%d]\n", fd);
-    while (fd != -1)
-    {
-        printf("%s", get_next_line(fd));
-
-    }
-    return (0);  
+	fd = open("myfile.txt", O_RDONLY);
+	if (fd > 0)
+	{
+		i = 2;
+		while (i--)
+			printf("%s", get_next_line(fd));
+	}
+	else
+		return(-1);
+	close(fd);
+	return (0);
 }
