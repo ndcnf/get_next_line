@@ -6,7 +6,7 @@
 /*   By: nchennaf <nchennaf@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 11:57:35 by nchennaf          #+#    #+#             */
-/*   Updated: 2021/12/01 12:09:11 by nchennaf         ###   ########.fr       */
+/*   Updated: 2021/12/03 18:08:15 by nchennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*ft_calloc(size_t count, size_t size)
 	if (!res)
 		return (NULL);
 	i = 0;
-	while (res[i])
+	while (i < (size * count))
 	{
 		res[i] = 0;
 		i++;

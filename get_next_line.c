@@ -6,7 +6,7 @@
 /*   By: nchennaf <nchennaf@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 13:06:35 by nchennaf          #+#    #+#             */
-/*   Updated: 2021/12/03 14:00:12 by nchennaf         ###   ########.fr       */
+/*   Updated: 2021/12/03 18:12:04 by nchennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	*get_next_line(int fd)
 {
 	int			i; 					// Position actuelle dans la ligne a retourner
-	static char	buffer[BUFFER_SIZE + 1];	// celui qui voyage entre les mondes, le gardien de la position interfonctions.
-	char		*line;		// la ligne a retourner. Gardons la propre. La star de la fonction.
+	char		buffer[BUFFER_SIZE + 1];	// celui qui voyage entre les mondes, le gardien de la position interfonctions.
+	static char	*line;		// la ligne a retourner. Gardons la propre. La star de la fonction.
 	ssize_t		been_read;	// la taille de ce qui a ete lu
 	int			welcome; // premiere entree dans la fonction
 	int			j;
@@ -33,7 +33,6 @@ char	*get_next_line(int fd)
 	i = 1;
 	j = 0;
 	welcome = 1;
-	line = NULL;
 	while (i > 0)
 	{
 		if (welcome == 1)
@@ -41,6 +40,7 @@ char	*get_next_line(int fd)
 //			printf("you're welcome\n");
 			i = 0;
 			welcome = 0;
+			line = NULL;
 		}
 
 		if (buffer[j] == 0)

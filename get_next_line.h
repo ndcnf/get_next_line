@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include <stdio.h> // enleve ca
 
-//#define	BUFFER_SIZE 1
+#define	BUFFER_SIZE 10
 char	*get_next_line(int fd);
 void	*ft_calloc(size_t count, size_t size);
 int		line_len(char *s);
