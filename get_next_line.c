@@ -6,7 +6,7 @@
 /*   By: nchennaf <nchennaf@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 13:06:35 by nchennaf          #+#    #+#             */
-/*   Updated: 2021/12/03 18:12:04 by nchennaf         ###   ########.fr       */
+/*   Updated: 2021/12/06 15:41:34 by nchennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*get_next_line(int fd)
 	int			i; 					// Position actuelle dans la ligne a retourner
 	char		buffer[BUFFER_SIZE + 1];	// celui qui voyage entre les mondes, le gardien de la position interfonctions.
 	static char	*line;		// la ligne a retourner. Gardons la propre. La star de la fonction.
-	ssize_t		been_read;	// la taille de ce qui a ete lu
+	//ssize_t		been_read;	// la taille de ce qui a ete lu
 	int			welcome; // premiere entree dans la fonction
 	int			j;
 
@@ -37,7 +37,6 @@ char	*get_next_line(int fd)
 	{
 		if (welcome == 1)
 		{
-//			printf("you're welcome\n");
 			i = 0;
 			welcome = 0;
 			line = NULL;
@@ -45,29 +44,24 @@ char	*get_next_line(int fd)
 
 		if (buffer[j] == 0)
 		{
-//			printf("avant calloc\n");
+			read(fd, buffer, BUFFER_SIZE); // avant, ca va mieux ? ON DIRAIT OUI
 			line = (char*)ft_calloc(line_len(buffer), sizeof(char));
-//			printf("apres calloc\n");
 			if (!line)
 				return (NULL);
-			been_read = read(fd, buffer, BUFFER_SIZE);
-//			printf("apres read\n");
+			//been_read = read(fd, buffer, BUFFER_SIZE);
 			j = 0;
 		}
 // ICI une question. La string de read() doit etre testee ici.
 		while (j < (BUFFER_SIZE))
 		{
-//			printf("avant test buffer[j]\n");
 			if (buffer[j] == '\n')
 			{
-//				printf("[%c]", buffer[j]);
 				line[i] = buffer[j];
 				//i = 0; utile si static
 				return (line);
 			}
 			else
 			{
-//			printf("%c", buffer[j]);
 				line[i] = buffer[j];
 				i++;
 				j++;
