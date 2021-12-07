@@ -6,19 +6,37 @@
 /*   By: nchennaf <nchennaf@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 13:06:35 by nchennaf          #+#    #+#             */
-/*   Updated: 2021/12/06 15:41:34 by nchennaf         ###   ########.fr       */
+/*   Updated: 2021/12/07 22:08:33 by nchennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+char	*leftovers(char *s, char *buffer)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (s[i])
+	{
+		if (s[i] != buffer[j])
+			s[i] = buffer[j];
+		i++;
+		j++;
+	}
+	return (s);
+}
+
 char	*get_next_line(int fd)
 {
-	int			i; 					// Position actuelle dans la ligne a retourner
-	char		buffer[BUFFER_SIZE + 1];	// celui qui voyage entre les mondes, le gardien de la position interfonctions.
+	static int	i = 1; 					// Position actuelle dans la ligne a retourner
+	static char	buffer[BUFFER_SIZE + 1];	// celui qui voyage entre les mondes, le gardien de la position interfonctions.
 	static char	*line;		// la ligne a retourner. Gardons la propre. La star de la fonction.
 	//ssize_t		been_read;	// la taille de ce qui a ete lu
-	int			welcome; // premiere entree dans la fonction
+	static char		*lefties;
+	static int	welcome = 1; // premiere entree dans la fonction
 	int			j;
 
 	/*	est-ce que l'initialisation ne se fera qu'une seule fois,
@@ -30,9 +48,9 @@ char	*get_next_line(int fd)
 		pas de reste d'un appel precedent
 
 		Ici, on part sur le fait qu'il est vide (n'a que des zeros)*/
-	i = 1;
+	//i = 1; // avec welcome
 	j = 0;
-	welcome = 1;
+	//welcome = 1;
 	while (i > 0)
 	{
 		if (welcome == 1)
@@ -40,6 +58,7 @@ char	*get_next_line(int fd)
 			i = 0;
 			welcome = 0;
 			line = NULL;
+			lefties = buffer;
 		}
 
 		if (buffer[j] == 0)
@@ -57,7 +76,8 @@ char	*get_next_line(int fd)
 			if (buffer[j] == '\n')
 			{
 				line[i] = buffer[j];
-				//i = 0; utile si static
+				i = 0; //utile si static
+				lefties = leftovers(line, buffer);
 				return (line);
 			}
 			else

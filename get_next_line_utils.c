@@ -6,7 +6,7 @@
 /*   By: nchennaf <nchennaf@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 11:57:35 by nchennaf          #+#    #+#             */
-/*   Updated: 2021/12/06 12:28:06 by nchennaf         ###   ########.fr       */
+/*   Updated: 2021/12/07 20:49:47 by nchennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,3 +69,29 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	}
 	return (ptr_dst);
 }
+
+/*char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char			*ptr;
+	unsigned int	i;
+	size_t			s_len;
+
+	if (s == NULL)
+		return (NULL);
+	s_len = (size_t)ft_strlen((char *)s);
+	i = 0;
+	if (start > s_len)
+		return (ft_strdup(""));
+	if (len > s_len - start)
+		len = s_len - start;
+	ptr = (char *)malloc(sizeof(char) * (len + 1));
+	if (ptr == NULL)
+		return (NULL);
+	while (i < len && (s[start + i]))
+	{
+		ptr[i] = (char)s[start + i];
+		i++;
+	}
+	ptr[len] = '\0';
+	return (ptr);
+}*/
