@@ -6,28 +6,32 @@
 /*   By: nchennaf <nchennaf@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 13:06:35 by nchennaf          #+#    #+#             */
-/*   Updated: 2021/12/07 22:08:33 by nchennaf         ###   ########.fr       */
+/*   Updated: 2021/12/08 22:03:12 by nchennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*leftovers(char *s, char *buffer)
+/*char	*leftovers(char *s, char *buffer)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*res;
 
 	i = 0;
 	j = 0;
-	while (s[i])
+	res = NULL;
+	while (buffer[i])
 	{
-		if (s[i] != buffer[j])
-			s[i] = buffer[j];
-		i++;
+		if (buffer[i] != s[j])
+		{
+			res = &buffer[i];
+		}
 		j++;
+		i++;
 	}
 	return (s);
-}
+}*/
 
 char	*get_next_line(int fd)
 {
@@ -35,13 +39,10 @@ char	*get_next_line(int fd)
 	static char	buffer[BUFFER_SIZE + 1];	// celui qui voyage entre les mondes, le gardien de la position interfonctions.
 	static char	*line;		// la ligne a retourner. Gardons la propre. La star de la fonction.
 	//ssize_t		been_read;	// la taille de ce qui a ete lu
-	static char		*lefties;
+	static char	*lefties;
 	static int	welcome = 1; // premiere entree dans la fonction
 	int			j;
-
-	/*	est-ce que l'initialisation ne se fera qu'une seule fois,
-		reellement ou est-ce que ca fonctionne uniquement lors de
-		la declaration-assignation ? */
+	size_t		b_len;
 
 	//*buffer = 0; // par defaut, la valeur devrait etre 0 pour une variable statique
 		/*	On va d'abord verifier qu'il n'y a rien dans le buffer,
@@ -51,6 +52,7 @@ char	*get_next_line(int fd)
 	//i = 1; // avec welcome
 	j = 0;
 	//welcome = 1;
+	b_len = line_len(buffer);
 	while (i > 0)
 	{
 		if (welcome == 1)
@@ -60,10 +62,15 @@ char	*get_next_line(int fd)
 			line = NULL;
 			lefties = buffer;
 		}
+		else if (buffer[j])
+		{
+			i = 0;
+			*buffer = *lefties; // semble juste
+		}
 
 		if (buffer[j] == 0)
 		{
-			read(fd, buffer, BUFFER_SIZE); // avant, ca va mieux ? ON DIRAIT OUI
+			read(fd, buffer, BUFFER_SIZE);
 			line = (char*)ft_calloc(line_len(buffer), sizeof(char));
 			if (!line)
 				return (NULL);
@@ -76,8 +83,8 @@ char	*get_next_line(int fd)
 			if (buffer[j] == '\n')
 			{
 				line[i] = buffer[j];
-				i = 0; //utile si static
-				lefties = leftovers(line, buffer);
+				//i = 0; //utile si static
+				lefties = ft_substr(buffer, (i + 1), b_len);
 				return (line);
 			}
 			else
