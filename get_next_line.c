@@ -12,46 +12,44 @@
 
 #include "get_next_line.h"
 
-/*char	*leftovers(char *s, char *buffer)
+int		line_len(char *s)
 {
-	int		i;
-	int		j;
-	char	*res;
+	static int	i; // oh yeah, on se souvient ou on en etait
+	int			j; // le i du passe
 
-	i = 0;
 	j = 0;
-	res = NULL;
-	while (buffer[i])
+	while (s[i])
 	{
-		if (buffer[i] != s[j])
+		if (s[i] == '\n')
 		{
-			res = &buffer[i];
+			i++;
+			return (j);
 		}
-		j++;
 		i++;
+		j++;
 	}
-	return (s);
-}*/
+	return (i);
+}
 
 char	*get_next_line(int fd)
 {
 	static int	i = 1; 					// Position actuelle dans la ligne a retourner
 	static char	buffer[BUFFER_SIZE + 1];	// celui qui voyage entre les mondes, le gardien de la position interfonctions.
-	static char	*line;		// la ligne a retourner. Gardons la propre. La star de la fonction.
-	//ssize_t		been_read;	// la taille de ce qui a ete lu
-	static char	*lefties;
+	char	*line;		// la ligne a retourner. Gardons la propre. La star de la fonction.
+	ssize_t		been_read;	// la taille de ce qui a ete lu
+	static char	*leftovers;
 	static int	welcome = 1; // premiere entree dans la fonction
 	int			j;
 	size_t		b_len;
 
-	//*buffer = 0; // par defaut, la valeur devrait etre 0 pour une variable statique
-		/*	On va d'abord verifier qu'il n'y a rien dans le buffer,
-		pas de reste d'un appel precedent
+	// *buffer = 0; // par defaut, la valeur devrait etre 0 pour une variable statique
+		
+	/*	On va d'abord verifier qu'il n'y a rien dans le buffer,
+	pas de reste d'un appel precedent */
 
-		Ici, on part sur le fait qu'il est vide (n'a que des zeros)*/
 	//i = 1; // avec welcome
 	j = 0;
-	//welcome = 1;
+	//welcome = 1; // si !static
 	b_len = line_len(buffer);
 	while (i > 0)
 	{
@@ -60,38 +58,40 @@ char	*get_next_line(int fd)
 			i = 0;
 			welcome = 0;
 			line = NULL;
-			lefties = buffer;
+			leftovers = buffer; // avant: buffer /ou NULL/"" ?
 		}
-		else if (buffer[j])
+		else if (leftovers[j]) // avant buffer[j]
 		{
 			i = 0;
-			*buffer = *lefties; // semble juste
+			//*buffer = *leftovers; // semblait juste, mais plus maintenant
 		}
 
-		if (buffer[j] == 0)
+		if (leftovers[j] == 0)
 		{
-			read(fd, buffer, BUFFER_SIZE);
-			line = (char*)ft_calloc(line_len(buffer), sizeof(char));
+			been_read = read(fd, buffer, BUFFER_SIZE);
+			//line = (char*)ft_calloc(line_len(buffer), sizeof(char));
+			line = (char*)ft_calloc(ft_strlen(buffer), sizeof(char));
 			if (!line)
 				return (NULL);
-			//been_read = read(fd, buffer, BUFFER_SIZE);
+			leftovers = ft_strdup(buffer);
 			j = 0;
 		}
 // ICI une question. La string de read() doit etre testee ici.
 		while (j < (BUFFER_SIZE))
 		{
-			if (buffer[j] == '\n')
+			if (leftovers[j] == '\n')
 			{
-				line[i] = buffer[j];
+				line[i] = leftovers[j];
 				//i = 0; //utile si static
-				lefties = ft_substr(buffer, (i + 1), b_len);
+				leftovers = ft_substr(buffer, (i + 1), (BUFFER_SIZE - i));
+				//ft_strdup(line);
 				return (line);
 			}
 			else
 			{
-				line[i] = buffer[j];
-				i++;
-				j++;
+				line[i++] = leftovers[j++];
+				//i++;
+				//j++;
 			}
 		}
 	}

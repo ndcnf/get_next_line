@@ -25,8 +25,9 @@
 char	*get_next_line(int fd);
 void	*ft_calloc(size_t count, size_t size);
 int		line_len(char *s);
-//void	*ft_memmove(void *dst, const void *src, size_t len);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strdup(const char *s1);
+char	*ft_strjoin(char const *s1, char const *s2);
+size_t	ft_strlen(const char *str);
 
 #endif

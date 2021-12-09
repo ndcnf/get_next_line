@@ -29,24 +29,13 @@ void	*ft_calloc(size_t count, size_t size)
 	return (res);
 }
 
-int		line_len(char *s)
+size_t	ft_strlen(const char *str)
 {
-	static int	i; // oh yeah, on se souvient ou on en etait
-	int			j; // le i du passe
+	int	i;
 
-	//i = 0; // inutile si static
-	j = 0;
-	while (s[i])
-	{
-		if (s[i] == '\n')
-		{
-			i++;
-			return (j);
-		}
+	i = 0;
+	while (str[i])
 		i++;
-		j++;
-		//j++;
-	}
 	return (i);
 }
 
@@ -58,7 +47,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 
 	if (!s)
 		return (NULL);
-	s_len = (size_t)line_len((char *)s);
+	s_len = (size_t)ft_strlen((char *)s);
 	i = 0;
 	if (start > s_len)
 		return (ft_strdup(""));
@@ -83,7 +72,7 @@ char	*ft_strdup(const char *s1)
 	size_t	len;
 
 	i = 0;
-	len = line_len((char *)s1);
+	len = ft_strlen((char *)s1);
 	buffer = (char *)malloc(sizeof(char) * (len + 1));
 	if (!buffer)
 		return (NULL);
@@ -96,3 +85,30 @@ char	*ft_strdup(const char *s1)
 	return (buffer);
 }
 
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	char	*s3;
+	size_t	s1_len;
+	size_t	s2_len;
+	size_t	i;
+	size_t	j;
+
+	if (s1 == NULL || s2 == NULL)
+		return (NULL);
+	s1_len = ft_strlen((char *)s1);
+	s2_len = ft_strlen((char *)s2);
+	s3 = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
+	if (s3 == NULL)
+		return (NULL);
+	i = -1;
+	while (s1[++i])
+		s3[i] = s1[i];
+	j = -1;
+	while (s2[++j])
+	{
+		s3[i] = s2[j];
+		i++;
+	}
+	s3[i] = '\0';
+	return (s3);
+}
