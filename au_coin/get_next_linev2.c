@@ -8,6 +8,7 @@ char	the_reader(int fd, char *s)
 char	the_oneliner(char *s)
 {
 
+
 }
 
 char	the_cleaner(char *s)
@@ -15,9 +16,19 @@ char	the_cleaner(char *s)
 
 }
 
-int		the_welcomer(int *newbie, int *i)
+int		the_welcomer(int *newbie, int *i, char *line)
 {
+	int	*p_i;
+	
+	p_i = i;
 	newbie = 0;
+	p_i = 0;
+	line = "";
+	if (!leftovers)
+		leftovers = ft_strdup(buffer);
+
+
+
 	return (newbie);
 }
 

@@ -1,5 +1,12 @@
-Bon
-jour, je suis la premiere ligne.
+0123456
+789ABCD
+EFGH
+IJK
+LMNOP
+Q
+RS
+TUVWXYZ.
+Bonjour, je suis la premiere ligne.
 Je suis la seconde.
 Et moi, la troisieme, enchantee.
 Quatrieme, si ca interesse quelqu'un ici.
