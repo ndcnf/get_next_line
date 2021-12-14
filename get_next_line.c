@@ -6,7 +6,7 @@
 /*   By: nchennaf <nchennaf@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 13:06:35 by nchennaf          #+#    #+#             */
-/*   Updated: 2021/12/14 13:07:02 by nchennaf         ###   ########.fr       */
+/*   Updated: 2021/12/14 17:14:01 by nchennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ char	*get_next_line(int fd)
 	char		*line;						// la ligne a retourner. Gardons la propre. La star de la fonction.
 	ssize_t		been_read;					// la taille de ce qui a ete lu
 	static char	*leftovers;
-	static int	welcome = 1;				// premiere entree dans la fonction
+	int			welcome;				// premiere entree dans la fonction
 	int			j;
-	//char		*res;
+	char		*res;
 
 	welcome = 1;
 	if (i > 0)
@@ -58,7 +58,7 @@ char	*get_next_line(int fd)
 		{
 			i = 0;
 			welcome = 0;
-			//res = "";
+			res = (char*)ft_calloc(line_len(buffer), sizeof(char));
 			line = (char*)ft_calloc(line_len(buffer), sizeof(char));
 			//if (!line)
 			//	return (NULL);
@@ -77,19 +77,23 @@ char	*get_next_line(int fd)
 
 		while (j < (BUFFER_SIZE))
 		{
-			if (leftovers[j] == 0)
+			if (leftovers[j] == '\0' && been_read >= 0)
 			{
-				leftovers = ft_substr(leftovers, (i + 1), (BUFFER_SIZE - i));
-				break;
+				//;
+				printf("AH-HA !");
+				//leftovers = ft_substr(leftovers, (j + 1), ft_strlen(leftovers));
+			//leftovers = ft_substr(leftovers, (i + 1), (BUFFER_SIZE - i));
+				//break;
 			}
-			if (leftovers[j] == '\n' || leftovers[j] == 0)
+			else if (leftovers[j] == '\n' || been_read == -1)
 			{
 				line[i] = leftovers[j];
-				leftovers = ft_substr(leftovers, (i + 1), (BUFFER_SIZE - i));
+				leftovers = ft_substr(leftovers, (j + 1), ft_strlen(leftovers));
 				i = 0;
-				//res = ft_strdup(line);
-				//free(line);
-				return (line);
+				res = ft_strdup(line);
+				free(line);
+				line = "";
+				return (res);
 			}
 			else
 				line[i++] = leftovers[j++];
