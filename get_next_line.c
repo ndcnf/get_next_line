@@ -6,7 +6,7 @@
 /*   By: nchennaf <nchennaf@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 13:06:35 by nchennaf          #+#    #+#             */
-/*   Updated: 2021/12/13 15:18:29 by nchennaf         ###   ########.fr       */
+/*   Updated: 2021/12/14 13:07:02 by nchennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,15 @@ char	*get_next_line(int fd)
 	int			j;
 	//char		*res;
 
-	/*	On va d'abord verifier qu'il n'y a rien dans le buffer,
-	pas de reste d'un appel precedent */
-
-	welcome = 1; // si !static
+	welcome = 1;
 	if (i > 0)
 		i = 0;
 	else
 		i = 1;
-	//i = 1; // avec welcome 1
 	j = 0;
+
+	//if (fd > 1023)
+	//	return (NULL);
 
 	while (i > 0)
 	{
@@ -59,16 +58,14 @@ char	*get_next_line(int fd)
 		{
 			i = 0;
 			welcome = 0;
+			//res = "";
 			line = (char*)ft_calloc(line_len(buffer), sizeof(char));
+			//if (!line)
+			//	return (NULL);
 			if (!leftovers)
 				leftovers = ft_strdup(buffer);
 		}
-		//else if (leftovers[j]) // avant buffer[j]
-		//{
-			//i = 0;
-			//*buffer = *leftovers; // semblait juste, mais plus maintenant
-		//}
-		//line = (char*)ft_calloc(line_len(buffer), sizeof(char));
+
 		if (leftovers[j] == 0)
 		{
 			been_read = read(fd, buffer, BUFFER_SIZE);
@@ -82,14 +79,16 @@ char	*get_next_line(int fd)
 		{
 			if (leftovers[j] == 0)
 			{
-				leftovers = ft_substr(leftovers, (i + 1), (BUFFER_SIZE - i)); //avant buffer
+				leftovers = ft_substr(leftovers, (i + 1), (BUFFER_SIZE - i));
 				break;
 			}
 			if (leftovers[j] == '\n' || leftovers[j] == 0)
 			{
 				line[i] = leftovers[j];
-				leftovers = ft_substr(leftovers, (i + 1), (BUFFER_SIZE - i)); // avant 'buffer'
+				leftovers = ft_substr(leftovers, (i + 1), (BUFFER_SIZE - i));
 				i = 0;
+				//res = ft_strdup(line);
+				//free(line);
 				return (line);
 			}
 			else
@@ -97,11 +96,8 @@ char	*get_next_line(int fd)
 		}
 	}
 	return (0); // pas sure de celui-ci.
-	}
-/*
-
 }
-
+/*
 	while (been_read > 0)
 	{
 		i = 0;

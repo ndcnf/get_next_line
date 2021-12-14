@@ -6,7 +6,7 @@
 /*   By: nchennaf <nchennaf@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:30:50 by nchennaf          #+#    #+#             */
-/*   Updated: 2021/12/08 17:57:45 by nchennaf         ###   ########.fr       */
+/*   Updated: 2021/12/14 13:04:46 by nchennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 #include <stdlib.h>
 #include <stdio.h> // enleve ca
 
-#define	BUFFER_SIZE 10
+#define	BUFFER_SIZE 1
 char	*get_next_line(int fd);
 void	*ft_calloc(size_t count, size_t size);
 int		line_len(char *s);
