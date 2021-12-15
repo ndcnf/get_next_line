@@ -6,7 +6,7 @@
 /*   By: nchennaf <nchennaf@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/29 13:06:35 by nchennaf          #+#    #+#             */
-/*   Updated: 2021/12/14 17:14:01 by nchennaf         ###   ########.fr       */
+/*   Updated: 2021/12/15 11:40:55 by nchennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,17 @@
 
 int		line_len(char *s)
 {
-	static int	i; // oh yeah, on se souvient ou on en etait
+	int	i; // oh yeah, on se souvient ou on en etait
 	int			j; // le i du passe
 
+	i = 0;
 	j = 0;
 	while (s[i])
 	{
 		if (s[i] == '\n')
 		{
 			i++;
-			return (j);
+			return (j + 1);
 		}
 		i++;
 		j++;
@@ -40,7 +41,7 @@ char	*get_next_line(int fd)
 	static char	*leftovers;
 	int			welcome;				// premiere entree dans la fonction
 	int			j;
-	char		*res;
+	//char		*res;
 
 	welcome = 1;
 	if (i > 0)
@@ -54,21 +55,27 @@ char	*get_next_line(int fd)
 
 	while (i > 0)
 	{
-		if (welcome == 1)
+		if (welcome) //welcome == 1
 		{
 			i = 0;
 			welcome = 0;
-			res = (char*)ft_calloc(line_len(buffer), sizeof(char));
+		//	res = (char*)ft_calloc(line_len(buffer), sizeof(char));
 			line = (char*)ft_calloc(line_len(buffer), sizeof(char));
+			been_read = 8; // nouvelle condition pour eviter le gros nombre qui sert a rien
 			//if (!line)
 			//	return (NULL);
 			if (!leftovers)
 				leftovers = ft_strdup(buffer);
 		}
 
-		if (leftovers[j] == 0)
+		if (leftovers[j] == '\0')
 		{
 			been_read = read(fd, buffer, BUFFER_SIZE);
+			if (been_read < 0)
+				return (NULL);
+			//else if (been_read == 0)
+			//	return ();
+
 			if (!line)
 				return (NULL);
 			leftovers = ft_strdup(buffer);
@@ -80,20 +87,20 @@ char	*get_next_line(int fd)
 			if (leftovers[j] == '\0' && been_read >= 0)
 			{
 				//;
-				printf("AH-HA !");
+				//printf("AH-HA !");
 				//leftovers = ft_substr(leftovers, (j + 1), ft_strlen(leftovers));
 			//leftovers = ft_substr(leftovers, (i + 1), (BUFFER_SIZE - i));
-				//break;
+				break;
 			}
 			else if (leftovers[j] == '\n' || been_read == -1)
 			{
 				line[i] = leftovers[j];
 				leftovers = ft_substr(leftovers, (j + 1), ft_strlen(leftovers));
 				i = 0;
-				res = ft_strdup(line);
-				free(line);
-				line = "";
-				return (res);
+			//	res = ft_strdup(line);
+			//	free(line);
+			//	line = "";
+				return (line); //res
 			}
 			else
 				line[i++] = leftovers[j++];
