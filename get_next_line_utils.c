@@ -6,7 +6,7 @@
 /*   By: nchennaf <nchennaf@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 11:57:35 by nchennaf          #+#    #+#             */
-/*   Updated: 2021/12/15 11:27:12 by nchennaf         ###   ########.fr       */
+/*   Updated: 2021/12/18 02:06:41 by nchennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,19 @@ size_t	ft_strlen(const char *str)
 	while (str[i])
 		i++;
 	return (i);
+}
+
+char	*ft_strchr(const char *s, int c)
+{
+	int		i;
+
+	i = 0;
+	while (s[i] != (char)c && s[i])
+		i++;
+	if (s[i] == (char)c)
+		return ((char *)&s[i]);
+	else
+		return (NULL);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
@@ -85,7 +98,7 @@ char	*ft_strdup(const char *s1)
 	return (buffer);
 }
 
-char	*ft_strjoin_n(char const *s1, char const *s2)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*s3;
 	size_t	s1_len;
@@ -93,18 +106,18 @@ char	*ft_strjoin_n(char const *s1, char const *s2)
 	size_t	i;
 	size_t	j;
 
-	if (!s1 || !s2)
+	if (s1 == NULL || s2 == NULL)
 		return (NULL);
 	s1_len = ft_strlen((char *)s1);
 	s2_len = ft_strlen((char *)s2);
 	s3 = (char *)malloc(sizeof(char) * (s1_len + s2_len + 1));
-	if (!s3)
+	if (s3 == NULL)
 		return (NULL);
 	i = -1;
-	while (s1[++i] != '\n' || s1[i])
+	while (s1[++i])
 		s3[i] = s1[i];
 	j = -1;
-	while (s2[++j] != '\n' || s2[i])
+	while (s2[++j])
 	{
 		s3[i] = s2[j];
 		i++;
@@ -112,3 +125,4 @@ char	*ft_strjoin_n(char const *s1, char const *s2)
 	s3[i] = '\0';
 	return (s3);
 }
+
