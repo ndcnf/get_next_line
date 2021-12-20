@@ -6,7 +6,7 @@
 /*   By: nchennaf <nchennaf@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:30:50 by nchennaf          #+#    #+#             */
-/*   Updated: 2021/12/18 01:29:30 by nchennaf         ###   ########.fr       */
+/*   Updated: 2021/12/20 17:06:45 by nchennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 #include <stdio.h> // enleve ca
 
 #ifndef BUFFER_SIZE
-# define	BUFFER_SIZE 10
+# define	BUFFER_SIZE 10000000
 #endif
 char	*get_next_line(int fd);
 void	*ft_calloc(size_t count, size_t size);
