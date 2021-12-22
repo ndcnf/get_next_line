@@ -6,28 +6,11 @@
 /*   By: nchennaf <nchennaf@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/01 11:57:35 by nchennaf          #+#    #+#             */
-/*   Updated: 2021/12/18 02:06:41 by nchennaf         ###   ########.fr       */
+/*   Updated: 2021/12/22 14:48:52 by nchennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-void	*ft_calloc(size_t count, size_t size)
-{
-	char	*res;
-	size_t	i;
-
-	res = (char*)malloc(size * count);
-	if (!res)
-		return (NULL);
-	i = 0;
-	while (i < count) //i < (size * count)
-	{
-		res[i] = 0;
-		i++;
-	}
-	return (res);
-}
 
 size_t	ft_strlen(const char *str)
 {
@@ -125,4 +108,3 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	s3[i] = '\0';
 	return (s3);
 }
-

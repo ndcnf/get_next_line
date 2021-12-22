@@ -6,24 +6,24 @@
 /*   By: nchennaf <nchennaf@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:30:50 by nchennaf          #+#    #+#             */
-/*   Updated: 2021/12/21 16:33:02 by nchennaf         ###   ########.fr       */
+/*   Updated: 2021/12/22 14:45:54 by nchennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_GET_NEXT_LINE_H
-# define FT_GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/uio.h>
-#include <stdlib.h>
-#include <stdio.h> // enleve ca
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <sys/uio.h>
+# include <stdlib.h>
 
-#ifndef BUFFER_SIZE
-# define	BUFFER_SIZE 100
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 100
+# endif
+
 char	*get_next_line(int fd);
 void	*ft_calloc(size_t count, size_t size);
 int		line_len(char *s);

@@ -6,13 +6,13 @@
 /*   By: nchennaf <nchennaf@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/21 16:30:53 by nchennaf          #+#    #+#             */
-/*   Updated: 2021/12/22 13:51:58 by nchennaf         ###   ########.fr       */
+/*   Updated: 2021/12/22 14:38:15 by nchennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	the_reader(char **leftovers, int fd)
+void	the_reader(char **leftovers, int fd)
 {
 	int		red_bean;
 	char	buffer[BUFFER_SIZE + 1];
@@ -26,16 +26,12 @@ int	the_reader(char **leftovers, int fd)
 	{
 		red_bean = read(fd, buffer, BUFFER_SIZE);
 		buffer[red_bean] = '\0';
-		if (red_bean != BUFFER_SIZE) //BUFFER_SIZE = (red_bean + 1), non ?
-		{
+		if (red_bean < BUFFER_SIZE)
 			eof = 1;
-		}
 		tempura = *leftovers;
 		*leftovers = ft_strjoin(*leftovers, buffer);
 		free(tempura);
-		//*leftovers = ft_strjoin(*leftovers, buffer); // attention contient un malloc
 	}
-	return (eof);
 }
 
 char	*the_oneliner(char **leftovers)
@@ -51,9 +47,9 @@ char	*the_oneliner(char **leftovers)
 		i++;
 	if (i == 0)
 		return (NULL);
-	line = ft_substr(*leftovers, 0, i); //i++ et (..., ..., i);
+	line = ft_substr(*leftovers, 0, i);
 	tempura = *leftovers;
-	*leftovers = ft_substr(*leftovers, i, (ft_strlen(*leftovers) - i)); // pour remplacer le \n de la ligne precedente
+	*leftovers = ft_substr(*leftovers, i, (ft_strlen(*leftovers) - i));
 	free(tempura);
 	return (line);
 }
