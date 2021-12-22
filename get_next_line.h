@@ -6,7 +6,7 @@
 /*   By: nchennaf <nchennaf@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/08 16:30:50 by nchennaf          #+#    #+#             */
-/*   Updated: 2021/12/22 14:59:50 by nchennaf         ###   ########.fr       */
+/*   Updated: 2021/12/22 15:14:51 by nchennaf         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 char	*get_next_line(int fd);
 void	the_reader(char **leftovers, int fd);
 char	*the_oneliner(char **leftovers);
-void	*ft_calloc(size_t count, size_t size);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strdup(const char *s1);
