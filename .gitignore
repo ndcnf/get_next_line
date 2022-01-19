@@ -1,7 +1,8 @@
 a.out
 get_next_line.h.gch
 .vscode/
-a.out.dSYM/
-get_next_line.h.gch
-au_coin/*
+a.out.dSYM/*
 *.txt
+gnlTester/
+*.swp
+.DS_Store
