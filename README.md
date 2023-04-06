@@ -17,7 +17,7 @@ Example: ``gcc -Wall -Wextra -Werror -D BUFFER_SIZE=42 *.c``
 To run:</br>
 ``./a.out <file>``</br>
 Where you give a file you want to read as `<file>`.</br>
-Here is an example with ``./a.out main.c``:
+Here is an example with the file ``main.c`` as an argument (``./a.out main.c``):
 
 <img width="575" alt="Example of an output" src="https://user-images.githubusercontent.com/84449287/230310864-eaf5f7f0-3cc4-483c-8c2f-71357920085c.png">
 
